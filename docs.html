@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation - Jeopardy Game</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/overview.css">
+  <style>
+    .docs-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    .docs-nav {
+      background-color: var(--card-bg);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .docs-nav h2 {
+      margin-bottom: 1rem;
+      color: var(--jeopardy-gold);
+    }
+    .docs-nav ul {
+      list-style: none;
+    }
+    .docs-nav li {
+      margin: 0.5rem 0;
+    }
+    .docs-nav a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    .docs-nav a:hover {
+      text-decoration: underline;
+    }
+    .docs-section {
+      background-color: var(--card-bg);
+      border-radius: 0.5rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    .docs-section h2 {
+      color: var(--jeopardy-gold);
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+    .docs-section h3 {
+      color: var(--text-color);
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .docs-section p {
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+    .docs-section ul {
+      margin-left: 2rem;
+      margin-bottom: 1rem;
+    }
+    .docs-section li {
+      margin: 0.5rem 0;
+    }
+    .docs-section code {
+      background-color: var(--bg-color);
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.25rem;
+      font-family: monospace;
+      color: var(--primary-color);
+    }
+    .docs-section pre {
+      background-color: var(--bg-color);
+      padding: 1rem;
+      border-radius: 0.375rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+    .docs-section pre code {
+      background: none;
+      padding: 0;
+      color: var(--text-color);
+    }
+    .back-link {
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="docs-container">
+    <div class="back-link">
+      <a href="index.html" class="btn btn-secondary">← Back to Games</a>
+    </div>
+
+    <header>
+      <h1>Jeopardy Game Documentation</h1>
+      <p class="subtitle">Learn how to create and play games</p>
+    </header>
+
+    <div class="docs-nav">
+      <h2>Quick Navigation</h2>
+      <ul>
+        <li><a href="#overview">Overview Page</a></li>
+        <li><a href="#game-board">Game Board Page</a></li>
+        <li><a href="#file-format">File Format</a></li>
+        <li><a href="#game-builder">Game Builder</a></li>
+        <li><a href="#features">Features & Settings</a></li>
+        <li><a href="#tips">Tips & Tricks</a></li>
+      </ul>
+    </div>
+
+    <div id="overview" class="docs-section">
+      <h2>Overview Page</h2>
+      <p>The overview page is your game management hub where you can create, view, and manage all your Jeopardy games.</p>
+
+      <h3>Creating a New Game</h3>
+      <p>Click the "Create New Game" button to access three options:</p>
+      <ul>
+        <li><strong>Upload File:</strong> Drag and drop or browse for a YAML/JSON game file</li>
+        <li><strong>Use Template:</strong> Start with a pre-made template (Easy, Medium, or Hard)</li>
+        <li><strong>Build Your Own:</strong> Use the visual game builder to create a custom game</li>
+      </ul>
+
+      <h3>Game Cards</h3>
+      <p>Each game displays:</p>
+      <ul>
+        <li>Game title and status (New, In Progress, Completed)</li>
+        <li>Progress indicator showing answered questions</li>
+        <li>Team names and current scores</li>
+        <li>Last played date</li>
+        <li>Delete button to remove the game</li>
+      </ul>
+
+      <h3>Resuming Games</h3>
+      <p>Click anywhere on a game card to resume playing. Your progress is automatically saved, so you can pick up right where you left off.</p>
+    </div>
+
+    <div id="game-board" class="docs-section">
+      <h2>Game Board Page</h2>
+      <p>The game board is where the action happens. It displays a classic Jeopardy-style grid with categories and questions.</p>
+
+      <h3>Playing Questions</h3>
+      <ol>
+        <li>Click any blue question tile to reveal the question</li>
+        <li>Select which team is answering</li>
+        <li>Reveal the answer when ready</li>
+        <li>Judge the response as correct or incorrect</li>
+        <li>Points are automatically added or subtracted</li>
+      </ol>
+
+      <h3>Daily Double</h3>
+      <p>When you hit a Daily Double:</p>
+      <ol>
+        <li>The game displays "DAILY DOUBLE!" animation</li>
+        <li>The first team (or selecting team) must place a wager</li>
+        <li>Minimum wager: $5</li>
+        <li>Maximum wager: Current score OR highest question value (whichever is greater)</li>
+        <li>Only the wagering team can answer</li>
+        <li>Correct adds the wager; incorrect subtracts it</li>
+      </ol>
+
+      <h3>Undo/Redo</h3>
+      <p>Made a mistake? Use the undo button (↶) to reverse any action. Redo (↷) restores actions you've undone. Every action is tracked:</p>
+      <ul>
+        <li>Answering questions</li>
+        <li>Daily Double wagers</li>
+        <li>Team changes</li>
+        <li>Score adjustments</li>
+      </ul>
+
+      <h3>Menu Options</h3>
+      <p>Click the Menu button to access:</p>
+      <ul>
+        <li><strong>Teams:</strong> Add, remove, or edit team names and colors</li>
+        <li><strong>Settings:</strong> Toggle timer, sounds, auto-reveal, and negative scores</li>
+        <li><strong>History:</strong> View all actions taken in the game</li>
+      </ul>
+    </div>
+
+    <div id="file-format" class="docs-section">
+      <h2>File Format</h2>
+      <p>Games can be created using YAML or JSON files. Both formats support the same structure.</p>
+
+      <h3>YAML Format Example</h3>
+      <pre><code>title: "Your Game Title"
+
+categories:
+  - name: "Category 1"
+    questions:
+      - value: 200
+        question: "Question text"
+        answer: "Answer text"
+      - value: 400
+        question: "Another question"
+        answer: "Another answer"
+        dailyDouble: true
+      - value: 600
+        question: "Question text"
+        answer: "Answer text"
+
+  - name: "Category 2"
+    questions:
+      - value: 200
+        question: "Question text"
+        answer: "Answer text"
+
+settings:
+  pointValues: [200, 400, 600, 800, 1000]
+  doubleJeopardy: false
+  allowNegativeScores: true
+  timerSeconds: 30</code></pre>
+
+      <h3>Required Fields</h3>
+      <ul>
+        <li><code>title</code> - Game title (string)</li>
+        <li><code>categories</code> - Array of category objects</li>
+        <li><code>categories[].name</code> - Category name (string)</li>
+        <li><code>categories[].questions</code> - Array of question objects</li>
+        <li><code>questions[].value</code> - Point value (number)</li>
+        <li><code>questions[].question</code> - Question text (string)</li>
+        <li><code>questions[].answer</code> - Answer text (string)</li>
+      </ul>
+
+      <h3>Optional Fields</h3>
+      <ul>
+        <li><code>questions[].dailyDouble</code> - Mark as Daily Double (boolean)</li>
+        <li><code>settings</code> - Game settings object
+          <ul>
+            <li><code>pointValues</code> - Default point values (array)</li>
+            <li><code>doubleJeopardy</code> - Double all values (boolean)</li>
+            <li><code>allowNegativeScores</code> - Allow negative scores (boolean)</li>
+            <li><code>timerSeconds</code> - Answer timer duration (number)</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>JSON Format</h3>
+      <p>The JSON format uses the same structure with standard JSON syntax. See the example files for reference.</p>
+    </div>
+
+    <div id="game-builder" class="docs-section">
+      <h2>Game Builder</h2>
+      <p>The visual game builder lets you create games without writing YAML or JSON files.</p>
+
+      <h3>Creating Your Game</h3>
+      <ol>
+        <li>Enter your game title</li>
+        <li>Add or remove rows and columns to customize your grid</li>
+        <li>Click any cell to edit its question and answer</li>
+        <li>Use the checkbox to mark one question as a Daily Double (optional)</li>
+        <li>Export your game as YAML or JSON, or save it directly</li>
+      </ol>
+
+      <h3>Grid Controls</h3>
+      <ul>
+        <li><strong>Add Column:</strong> Creates a new category</li>
+        <li><strong>Remove Column:</strong> Deletes the last category</li>
+        <li><strong>Add Row:</strong> Adds a question to all categories</li>
+        <li><strong>Remove Row:</strong> Removes the last question from all categories</li>
+      </ul>
+
+      <h3>Editing Cells</h3>
+      <p>When you click a cell, you can edit:</p>
+      <ul>
+        <li><strong>Category Name:</strong> The category header (first row only)</li>
+        <li><strong>Point Value:</strong> The question's point value</li>
+        <li><strong>Question:</strong> The question text</li>
+        <li><strong>Answer:</strong> The answer text</li>
+        <li><strong>Summary:</strong> A short title for easy editing (not shown during gameplay)</li>
+      </ul>
+    </div>
+
+    <div id="features" class="docs-section">
+      <h2>Features & Settings</h2>
+
+      <h3>Teams</h3>
+      <p>Support for 1-6 teams with:</p>
+      <ul>
+        <li>Custom team names</li>
+        <li>Color-coded display</li>
+        <li>Individual score tracking</li>
+        <li>Add/remove teams during gameplay</li>
+      </ul>
+
+      <h3>Settings</h3>
+      <p><strong>Timer:</strong> Enable a countdown timer for answering questions (default: 30 seconds)</p>
+      <p><strong>Sound Effects:</strong> Toggle buzzer and answer sounds (future enhancement)</p>
+      <p><strong>Show Answers:</strong> Automatically reveal answers or require manual reveal</p>
+      <p><strong>Allow Negative Scores:</strong> Teams can go below zero or stay at zero minimum</p>
+
+      <h3>Game State Persistence</h3>
+      <p>All games are saved to your browser's localStorage:</p>
+      <ul>
+        <li>Progress persists across page refreshes</li>
+        <li>Full undo/redo history is saved</li>
+        <li>Team scores and settings are preserved</li>
+        <li>Storage is local to your browser (doesn't sync across devices)</li>
+      </ul>
+    </div>
+
+    <div id="tips" class="docs-section">
+      <h2>Tips & Tricks</h2>
+
+      <h3>Creating Great Games</h3>
+      <ul>
+        <li>Use clear, concise category names</li>
+        <li>Write questions that have definitive answers</li>
+        <li>Balance difficulty across point values</li>
+        <li>Place Daily Doubles strategically (higher values are traditional)</li>
+        <li>Test your game before playing with others</li>
+      </ul>
+
+      <h3>Gameplay Tips</h3>
+      <ul>
+        <li>Use undo if you make a mistake judging an answer</li>
+        <li>Check the history in the menu to review all actions</li>
+        <li>Customize team colors for easy identification</li>
+        <li>Enable "Show Answers" for casual play</li>
+        <li>Disable "Show Answers" for competitive play</li>
+      </ul>
+
+      <h3>Organization</h3>
+      <ul>
+        <li>Create separate games for different topics</li>
+        <li>Use descriptive game titles</li>
+        <li>Delete completed games to free up storage</li>
+        <li>Export/backup game files for reuse</li>
+      </ul>
+
+      <h3>Troubleshooting</h3>
+      <p><strong>Game won't load:</strong> Check that all required fields are in your file</p>
+      <p><strong>Storage full:</strong> Delete old games or clear your browser's localStorage</p>
+      <p><strong>Questions missing:</strong> Verify your YAML/JSON syntax is correct</p>
+    </div>
+
+    <div class="docs-section">
+      <h2>Need More Help?</h2>
+      <p>Check out the sample game file in <code>examples/sample-game.yaml</code> for a complete working example.</p>
+      <p>For technical details, see the <code>README.md</code> file in the project root.</p>
+    </div>
+  </div>
+</body>
+</html>

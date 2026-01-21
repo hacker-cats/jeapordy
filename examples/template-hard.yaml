@@ -1,0 +1,100 @@
+title: "Hard Trivia Template"
+
+categories:
+  - name: "Ancient History"
+    questions:
+      - value: 200
+        question: "This ancient wonder was a lighthouse in Egypt"
+        answer: "What is the Lighthouse of Alexandria?"
+      - value: 400
+        question: "This Roman emperor was assassinated on the Ides of March"
+        answer: "Who is Julius Caesar?"
+      - value: 600
+        question: "This civilization built Machu Picchu"
+        answer: "Who are the Inca?"
+      - value: 800
+        question: "This battle in 490 BC gave us the marathon distance"
+        answer: "What is the Battle of Marathon?"
+      - value: 1000
+        question: "This pharaoh's tomb was discovered largely intact in 1922"
+        answer: "Who is Tutankhamun (King Tut)?"
+
+  - name: "Classical Music"
+    questions:
+      - value: 200
+        question: "This composer wrote 'The Four Seasons'"
+        answer: "Who is Antonio Vivaldi?"
+      - value: 400
+        question: "This symphony by Beethoven is also known as 'Choral'"
+        answer: "What is Symphony No. 9?"
+      - value: 600
+        question: "This opera by Mozart features the Queen of the Night aria"
+        answer: "What is 'The Magic Flute'?"
+        dailyDouble: true
+      - value: 800
+        question: "This Russian composer wrote 'The Firebird'"
+        answer: "Who is Igor Stravinsky?"
+      - value: 1000
+        question: "This Baroque composer wrote 'Toccata and Fugue in D minor'"
+        answer: "Who is Johann Sebastian Bach?"
+
+  - name: "Chemistry"
+    questions:
+      - value: 200
+        question: "This is the atomic number of carbon"
+        answer: "What is 6?"
+      - value: 400
+        question: "This noble gas has the symbol 'Xe'"
+        answer: "What is xenon?"
+      - value: 600
+        question: "This law states PV=nRT"
+        answer: "What is the Ideal Gas Law?"
+      - value: 800
+        question: "This element was named after the Greek word for 'green'"
+        answer: "What is chlorine?"
+      - value: 1000
+        question: "This scientist won Nobel Prizes in both Physics and Chemistry"
+        answer: "Who is Marie Curie?"
+
+  - name: "World Literature"
+    questions:
+      - value: 200
+        question: "This novel by Orwell depicts a totalitarian future"
+        answer: "What is '1984'?"
+      - value: 400
+        question: "This James Joyce novel follows Leopold Bloom"
+        answer: "What is 'Ulysses'?"
+      - value: 600
+        question: "This Gabriel García Márquez novel features the Buendía family"
+        answer: "What is 'One Hundred Years of Solitude'?"
+      - value: 800
+        question: "This Russian author wrote 'The Brothers Karamazov'"
+        answer: "Who is Fyodor Dostoevsky?"
+      - value: 1000
+        question: "This epic poem by Dante has three parts: Inferno, Purgatorio, and Paradiso"
+        answer: "What is 'The Divine Comedy'?"
+
+  - name: "Advanced Math"
+    questions:
+      - value: 200
+        question: "This is the value of pi to two decimal places"
+        answer: "What is 3.14?"
+      - value: 400
+        question: "This mathematician proved Fermat's Last Theorem in 1995"
+        answer: "Who is Andrew Wiles?"
+      - value: 600
+        question: "This is the sum of angles in a triangle"
+        answer: "What is 180 degrees?"
+        dailyDouble: true
+      - value: 800
+        question: "This constant is the base of natural logarithms"
+        answer: "What is e (Euler's number)?"
+      - value: 1000
+        question: "This unsolved problem involves the distribution of prime numbers"
+        answer: "What is the Riemann Hypothesis?"
+
+settings:
+  pointValues: [200, 400, 600, 800, 1000]
+  doubleJeopardy: false
+  allowNegativeScores: true
+  timerSeconds: 30

@@ -1,0 +1,100 @@
+title: "General Knowledge Trivia"
+
+categories:
+  - name: "Science"
+    questions:
+      - value: 200
+        question: "This is the chemical symbol for water"
+        answer: "What is H2O?"
+      - value: 400
+        question: "This planet is known as the Red Planet"
+        answer: "What is Mars?"
+      - value: 600
+        question: "This is the powerhouse of the cell"
+        answer: "What is the mitochondria?"
+      - value: 800
+        question: "This scientist developed the theory of relativity"
+        answer: "Who is Albert Einstein?"
+        dailyDouble: true
+      - value: 1000
+        question: "This is the speed of light in meters per second"
+        answer: "What is 299,792,458 m/s?"
+
+  - name: "History"
+    questions:
+      - value: 200
+        question: "This war ended in 1945"
+        answer: "What is World War II?"
+      - value: 400
+        question: "This document was signed in 1776"
+        answer: "What is the Declaration of Independence?"
+      - value: 600
+        question: "This wall fell in 1989"
+        answer: "What is the Berlin Wall?"
+      - value: 800
+        question: "This was the first permanent English settlement in North America"
+        answer: "What is Jamestown?"
+      - value: 1000
+        question: "This empire was ruled by Julius Caesar"
+        answer: "What is the Roman Empire?"
+
+  - name: "Geography"
+    questions:
+      - value: 200
+        question: "This is the capital of France"
+        answer: "What is Paris?"
+      - value: 400
+        question: "This is the largest ocean on Earth"
+        answer: "What is the Pacific Ocean?"
+      - value: 600
+        question: "This mountain is the tallest in the world"
+        answer: "What is Mount Everest?"
+      - value: 800
+        question: "This is the longest river in the world"
+        answer: "What is the Nile River?"
+      - value: 1000
+        question: "This country has the most time zones"
+        answer: "What is France (including territories)?"
+
+  - name: "Literature"
+    questions:
+      - value: 200
+        question: "This author wrote 'Romeo and Juliet'"
+        answer: "Who is William Shakespeare?"
+      - value: 400
+        question: "This is the first book in the Harry Potter series"
+        answer: "What is 'Harry Potter and the Philosopher's Stone' (or Sorcerer's Stone)?"
+      - value: 600
+        question: "This novel begins with 'Call me Ishmael'"
+        answer: "What is Moby-Dick?"
+      - value: 800
+        question: "This author wrote '1984' and 'Animal Farm'"
+        answer: "Who is George Orwell?"
+      - value: 1000
+        question: "This is the longest novel ever written"
+        answer: "What is 'In Search of Lost Time' by Marcel Proust?"
+
+  - name: "Pop Culture"
+    questions:
+      - value: 200
+        question: "This streaming service is known for 'Stranger Things'"
+        answer: "What is Netflix?"
+      - value: 400
+        question: "This artist painted the Mona Lisa"
+        answer: "Who is Leonardo da Vinci?"
+        dailyDouble: true
+      - value: 600
+        question: "This band is known for the song 'Bohemian Rhapsody'"
+        answer: "Who is Queen?"
+      - value: 800
+        question: "This is the highest-grossing film of all time (unadjusted)"
+        answer: "What is Avatar?"
+      - value: 1000
+        question: "This person has won the most Academy Awards"
+        answer: "Who is Walt Disney (22 Oscars)?"
+
+settings:
+  pointValues: [200, 400, 600, 800, 1000]
+  doubleJeopardy: false
+  allowNegativeScores: true
+  timerSeconds: 30

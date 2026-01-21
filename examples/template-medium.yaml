@@ -1,0 +1,82 @@
+title: "Medium Trivia Template"
+
+categories:
+  - name: "World Capitals"
+    questions:
+      - value: 200
+        question: "This is the capital of Japan"
+        answer: "What is Tokyo?"
+      - value: 400
+        question: "This is the capital of Australia"
+        answer: "What is Canberra?"
+      - value: 600
+        question: "This is the capital of Canada"
+        answer: "What is Ottawa?"
+      - value: 800
+        question: "This is the capital of Brazil"
+        answer: "What is Brasília?"
+
+  - name: "Famous Authors"
+    questions:
+      - value: 200
+        question: "This author wrote 'The Great Gatsby'"
+        answer: "Who is F. Scott Fitzgerald?"
+      - value: 400
+        question: "This author created Sherlock Holmes"
+        answer: "Who is Arthur Conan Doyle?"
+      - value: 600
+        question: "This author wrote 'Pride and Prejudice'"
+        answer: "Who is Jane Austen?"
+      - value: 800
+        question: "This author wrote 'The Catcher in the Rye'"
+        answer: "Who is J.D. Salinger?"
+
+  - name: "Science"
+    questions:
+      - value: 200
+        question: "This element has the chemical symbol 'O'"
+        answer: "What is oxygen?"
+      - value: 400
+        question: "This planet is closest to the sun"
+        answer: "What is Mercury?"
+        dailyDouble: true
+      - value: 600
+        question: "This scientist discovered penicillin"
+        answer: "Who is Alexander Fleming?"
+      - value: 800
+        question: "This is the hardest natural substance on Earth"
+        answer: "What is diamond?"
+
+  - name: "Movies"
+    questions:
+      - value: 200
+        question: "This 1997 film features a ship hitting an iceberg"
+        answer: "What is Titanic?"
+      - value: 400
+        question: "This director is known for 'Jurassic Park'"
+        answer: "Who is Steven Spielberg?"
+      - value: 600
+        question: "This actor played Iron Man in the Marvel films"
+        answer: "Who is Robert Downey Jr.?"
+      - value: 800
+        question: "This film won Best Picture at the 2020 Oscars"
+        answer: "What is Parasite?"
+
+  - name: "Sports"
+    questions:
+      - value: 200
+        question: "This sport is known as 'the beautiful game'"
+        answer: "What is soccer (football)?"
+      - value: 400
+        question: "This tennis tournament is played on grass courts"
+        answer: "What is Wimbledon?"
+      - value: 600
+        question: "This country hosted the 2016 Summer Olympics"
+        answer: "What is Brazil?"
+      - value: 800
+        question: "This NBA player has the most championship rings"
+        answer: "Who is Bill Russell?"
+
+settings:
+  pointValues: [200, 400, 600, 800]
+  allowNegativeScores: true

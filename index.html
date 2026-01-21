@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeopardy Game - Overview</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/overview.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Jeopardy Game</h1>
+      <p class="subtitle">Manage your game instances</p>
+      <p><a href="docs.html" class="btn btn-secondary" style="margin-top: 1rem;">📖 Documentation</a></p>
+    </header>
+
+    <main>
+      <div class="actions">
+        <button id="newGameBtn" class="btn btn-primary">Create New Game</button>
+      </div>
+
+      <div id="gamesContainer" class="games-grid">
+        <!-- Game cards will be inserted here -->
+      </div>
+
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <p>No games yet. Create your first game!</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- New Game Modal -->
+  <div id="newGameModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Create New Game</h2>
+        <button class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="create-options">
+          <button class="option-card" id="uploadOption">
+            <span class="option-icon">📁</span>
+            <h3>Upload File</h3>
+            <p>Upload a YAML or JSON game file</p>
+          </button>
+          <button class="option-card" id="templateOption">
+            <span class="option-icon">📋</span>
+            <h3>Use Template</h3>
+            <p>Start with a pre-made template</p>
+          </button>
+          <button class="option-card" id="builderOption">
+            <span class="option-icon">🔨</span>
+            <h3>Build Your Own</h3>
+            <p>Create a game with the visual builder</p>
+          </button>
+        </div>
+
+        <div id="uploadSection" style="display: none;">
+          <button class="btn btn-secondary btn-small" id="backToOptions">← Back</button>
+          <div class="upload-area" id="uploadArea" style="margin-top: 1rem;">
+            <div class="upload-icon">📁</div>
+            <p>Drag & drop a YAML or JSON file here</p>
+            <p class="upload-hint">or click to browse</p>
+            <input type="file" id="fileInput" accept=".yaml,.yml,.json" style="display: none;">
+          </div>
+          <div id="fileInfo" class="file-info" style="display: none;"></div>
+          <div id="errorMessage" class="error-message" style="display: none;"></div>
+        </div>
+
+        <div id="templateSection" style="display: none;">
+          <button class="btn btn-secondary btn-small" id="backToOptionsFromTemplate">← Back</button>
+          <h3 style="margin: 1rem 0;">Choose a Template</h3>
+          <div class="template-options">
+            <button class="template-card" data-template="easy">
+              <h4>Easy Template</h4>
+              <p>4 categories × 3 questions</p>
+              <p>Simple topics, lower point values</p>
+            </button>
+            <button class="template-card" data-template="medium">
+              <h4>Medium Template</h4>
+              <p>5 categories × 4 questions</p>
+              <p>Moderate difficulty</p>
+            </button>
+            <button class="template-card" data-template="hard">
+              <h4>Hard Template</h4>
+              <p>5 categories × 5 questions</p>
+              <p>Challenging topics, full Jeopardy board</p>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+        <button id="createBtn" class="btn btn-primary" style="display: none;">Create Game</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="deleteModal" class="modal">
+    <div class="modal-content modal-small">
+      <div class="modal-header">
+        <h2>Delete Game</h2>
+        <button class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this game? This action cannot be undone.</p>
+        <p class="game-title-display"></p>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelDeleteBtn" class="btn btn-secondary">Cancel</button>
+        <button id="confirmDeleteBtn" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="lib/js-yaml.min.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/gameState.js"></script>
+  <script src="js/history.js"></script>
+  <script src="js/parser.js"></script>
+  <script src="js/overview.js"></script>
+</body>
+</html>

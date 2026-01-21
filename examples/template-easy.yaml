@@ -1,0 +1,55 @@
+title: "Easy Trivia Template"
+
+categories:
+  - name: "Animals"
+    questions:
+      - value: 100
+        question: "This animal is known as man's best friend"
+        answer: "What is a dog?"
+      - value: 200
+        question: "This striped animal is the largest cat species"
+        answer: "What is a tiger?"
+      - value: 300
+        question: "This bird cannot fly but can swim very well"
+        answer: "What is a penguin?"
+
+  - name: "Colors"
+    questions:
+      - value: 100
+        question: "This color is the combination of red and yellow"
+        answer: "What is orange?"
+      - value: 200
+        question: "This is the color of the sky on a clear day"
+        answer: "What is blue?"
+      - value: 300
+        question: "This color represents envy or jealousy"
+        answer: "What is green?"
+
+  - name: "Food"
+    questions:
+      - value: 100
+        question: "This yellow fruit is high in potassium"
+        answer: "What is a banana?"
+      - value: 200
+        question: "This Italian dish consists of dough, sauce, and cheese"
+        answer: "What is pizza?"
+      - value: 300
+        question: "This breakfast food comes from chickens"
+        answer: "What are eggs?"
+
+  - name: "Numbers"
+    questions:
+      - value: 100
+        question: "This is the number of days in a week"
+        answer: "What is seven (7)?"
+      - value: 200
+        question: "This is the number of sides on a square"
+        answer: "What is four (4)?"
+        dailyDouble: true
+      - value: 300
+        question: "This is the number of months in a year"
+        answer: "What is twelve (12)?"
+
+settings:
+  pointValues: [100, 200, 300]
+  allowNegativeScores: false

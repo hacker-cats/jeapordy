@@ -1,0 +1,454 @@
+/* Game board specific styles */
+
+.game-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--card-bg);
+  border-bottom: 2px solid var(--jeopardy-gold);
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.game-header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--jeopardy-gold);
+}
+
+/* Teams display */
+.teams-display {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background-color: var(--bg-color);
+  border-bottom: 1px solid var(--border-color);
+  flex-wrap: wrap;
+}
+
+.team-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--card-bg);
+  border-radius: 0.5rem;
+  border-left: 4px solid;
+  min-width: 150px;
+}
+
+.team-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.team-points {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* Game board */
+.game-board {
+  flex: 1;
+  padding: 2rem;
+  overflow-x: auto;
+}
+
+.board-grid {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-width: 800px;
+}
+
+.board-grid.cols-5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.board-grid.cols-6 {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.category-header {
+  background-color: var(--jeopardy-blue);
+  color: white;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 0.25rem;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.question-tile {
+  background-color: var(--jeopardy-blue);
+  color: var(--jeopardy-gold);
+  padding: 2rem 1rem;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.question-tile:hover {
+  transform: scale(1.05);
+}
+
+.question-tile.answered {
+  background-color: var(--secondary-color);
+  color: var(--text-secondary);
+  cursor: pointer;
+  opacity: 0.5;
+  position: relative;
+}
+
+.question-tile.answered::after {
+  content: '✓';
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 1.5rem;
+  color: var(--success-color);
+}
+
+.question-tile.answered:hover {
+  transform: scale(1.02);
+  opacity: 0.7;
+}
+
+/* Question modal */
+.question-value {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--jeopardy-gold);
+  margin-bottom: 2rem;
+}
+
+.question-text {
+  font-size: 1.75rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: var(--jeopardy-blue);
+  border-radius: 0.5rem;
+}
+
+.buzzer-section {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.buzzer-section p {
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+}
+
+.buzzer-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.buzzer-btn {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border: 3px solid;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 150px;
+}
+
+.buzzer-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.answer-section {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.answer-text {
+  font-size: 1.5rem;
+  padding: 1.5rem;
+  background-color: var(--bg-color);
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+  border-left: 4px solid var(--success-color);
+}
+
+.judgment-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.judgment-buttons .btn {
+  min-width: 150px;
+  font-size: 1.125rem;
+  padding: 1rem 2rem;
+}
+
+/* Daily Double */
+.daily-double-screen {
+  text-align: center;
+  padding: 2rem;
+}
+
+.daily-double-title {
+  font-size: 4rem;
+  font-weight: 900;
+  color: var(--jeopardy-gold);
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  animation: pulse 1s ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.wager-input-group {
+  margin: 2rem 0;
+}
+
+.wager-input-group label {
+  display: block;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.wager-input {
+  width: 200px;
+  padding: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  border-radius: 0.5rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.wager-input:focus {
+  outline: none;
+  border-color: var(--jeopardy-gold);
+}
+
+.wager-hint {
+  margin-top: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+#dailyDoubleTeam {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+}
+
+/* Menu modal */
+.menu-section {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.menu-section:last-child {
+  border-bottom: none;
+}
+
+.menu-section h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--jeopardy-gold);
+}
+
+.settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.setting-item input[type="checkbox"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+}
+
+/* Team manager */
+#teamsManager {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.team-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: var(--bg-color);
+  border-radius: 0.375rem;
+  border-left: 4px solid;
+}
+
+.team-item-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.team-item-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* History list */
+.history-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.history-item {
+  padding: 0.75rem;
+  background-color: var(--bg-color);
+  border-radius: 0.375rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.history-item.current {
+  border-left: 3px solid var(--primary-color);
+}
+
+.history-empty {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .question-text {
+    font-size: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .question-value {
+    font-size: 2.5rem;
+  }
+
+  .daily-double-title {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .game-header h1 {
+    font-size: 1.125rem;
+  }
+
+  .header-left,
+  .header-right {
+    gap: 0.5rem;
+  }
+
+  .teams-display {
+    padding: 0.75rem 1rem;
+  }
+
+  .team-score {
+    padding: 0.5rem 1rem;
+    min-width: 120px;
+  }
+
+  .team-points {
+    font-size: 1.25rem;
+  }
+
+  .game-board {
+    padding: 1rem;
+  }
+
+  .board-grid {
+    min-width: 600px;
+  }
+
+  .question-tile {
+    font-size: 2rem;
+    padding: 1.5rem 0.75rem;
+    min-height: 90px;
+  }
+
+  .category-header {
+    font-size: 0.875rem;
+    padding: 1rem 0.5rem;
+    min-height: 80px;
+  }
+
+  .question-text {
+    font-size: 1.25rem;
+    padding: 1rem;
+  }
+
+  .daily-double-title {
+    font-size: 2.5rem;
+  }
+
+  .buzzer-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    min-width: 120px;
+  }
+}

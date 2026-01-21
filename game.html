@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeopardy Game</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+  <div class="game-container">
+    <header class="game-header">
+      <div class="header-left">
+        <button id="backBtn" class="btn btn-secondary">← Overview</button>
+        <h1 id="gameTitle">Game Title</h1>
+      </div>
+      <div class="header-right">
+        <button id="undoBtn" class="btn btn-icon" title="Undo" disabled>↶</button>
+        <button id="redoBtn" class="btn btn-icon" title="Redo" disabled>↷</button>
+        <button id="menuBtn" class="btn btn-secondary">Menu</button>
+      </div>
+    </header>
+
+    <div class="teams-display" id="teamsDisplay">
+      <!-- Teams will be inserted here -->
+    </div>
+
+    <main class="game-board" id="gameBoard">
+      <!-- Game board will be inserted here -->
+    </main>
+  </div>
+
+  <!-- Question Modal -->
+  <div id="questionModal" class="modal">
+    <div class="modal-content modal-large">
+      <div class="modal-header">
+        <h2 id="categoryTitle">Category</h2>
+        <button class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="dailyDoubleScreen" class="daily-double-screen" style="display: none;">
+          <h2 class="daily-double-title">DAILY DOUBLE!</h2>
+          <p id="dailyDoubleTeam"></p>
+          <div class="wager-input-group">
+            <label for="wagerInput">Enter your wager:</label>
+            <input type="number" id="wagerInput" class="wager-input" min="5">
+            <p class="wager-hint" id="wagerHint"></p>
+          </div>
+          <button id="submitWagerBtn" class="btn btn-primary">Submit Wager</button>
+        </div>
+
+        <div id="questionScreen" style="display: none;">
+          <div class="question-value" id="questionValue">$200</div>
+          <div class="question-text" id="questionText">Question text goes here</div>
+
+          <div id="buzzerSection" class="buzzer-section">
+            <p>Which team is answering?</p>
+            <div id="buzzerButtons" class="buzzer-buttons">
+              <!-- Team buttons will be inserted here -->
+            </div>
+          </div>
+
+          <div id="answerSection" class="answer-section" style="display: none;">
+            <button id="revealBtn" class="btn btn-secondary">Reveal Answer</button>
+            <div id="answerText" class="answer-text" style="display: none;"></div>
+            <div id="judgmentButtons" class="judgment-buttons" style="display: none;">
+              <button id="correctBtn" class="btn btn-success">Correct</button>
+              <button id="incorrectBtn" class="btn btn-danger">Incorrect</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu Modal -->
+  <div id="menuModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Game Menu</h2>
+        <button class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="menu-section">
+          <h3>Teams</h3>
+          <div id="teamsManager">
+            <!-- Team management will be inserted here -->
+          </div>
+          <button id="addTeamBtn" class="btn btn-secondary btn-small">+ Add Team</button>
+        </div>
+
+        <div class="menu-section">
+          <h3>Settings</h3>
+          <div class="settings-list">
+            <label class="setting-item">
+              <input type="checkbox" id="timerToggle">
+              <span>Enable Timer</span>
+            </label>
+            <label class="setting-item">
+              <input type="checkbox" id="soundToggle">
+              <span>Sound Effects</span>
+            </label>
+            <label class="setting-item">
+              <input type="checkbox" id="showAnswersToggle">
+              <span>Show Answers Immediately</span>
+            </label>
+            <label class="setting-item">
+              <input type="checkbox" id="negativeScoresToggle">
+              <span>Allow Negative Scores</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="menu-section">
+          <h3>History</h3>
+          <div id="historyList" class="history-list">
+            <!-- History will be inserted here -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="closeMenuBtn" class="btn btn-primary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Team Modal -->
+  <div id="editTeamModal" class="modal">
+    <div class="modal-content modal-small">
+      <div class="modal-header">
+        <h2>Edit Team</h2>
+        <button class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="teamNameInput">Team Name:</label>
+          <input type="text" id="teamNameInput" class="text-input">
+        </div>
+        <div class="form-group">
+          <label for="teamColorInput">Team Color:</label>
+          <input type="color" id="teamColorInput" class="color-input">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelEditTeamBtn" class="btn btn-secondary">Cancel</button>
+        <button id="saveTeamBtn" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/gameState.js"></script>
+  <script src="js/history.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

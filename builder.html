@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Builder - Jeopardy Game</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/builder.css">
+</head>
+<body>
+  <div class="builder-container">
+    <header class="builder-header">
+      <div class="header-left">
+        <button id="backBtn" class="btn btn-secondary">← Back to Overview</button>
+        <h1>Game Builder</h1>
+      </div>
+      <div class="header-right">
+        <button id="exportYamlBtn" class="btn btn-secondary">Export YAML</button>
+        <button id="exportJsonBtn" class="btn btn-secondary">Export JSON</button>
+        <button id="saveGameBtn" class="btn btn-primary">Save & Play</button>
+      </div>
+    </header>
+
+    <main class="builder-main">
+      <div class="builder-form">
+        <div class="form-group">
+          <label for="gameTitle">Game Title:</label>
+          <input type="text" id="gameTitle" class="text-input" placeholder="Enter game title..." value="My Jeopardy Game">
+        </div>
+
+        <div class="grid-controls">
+          <div>
+            <button id="addColumnBtn" class="btn btn-secondary btn-small">+ Add Column</button>
+            <button id="removeColumnBtn" class="btn btn-secondary btn-small">− Remove Column</button>
+          </div>
+          <div>
+            <button id="addRowBtn" class="btn btn-secondary btn-small">+ Add Row</button>
+            <button id="removeRowBtn" class="btn btn-secondary btn-small">− Remove Row</button>
+          </div>
+        </div>
+
+        <div class="daily-double-info">
+          <p>💡 Click a cell to edit. Use the checkbox to mark ONE Daily Double (optional).</p>
+        </div>
+
+        <div id="builderGrid" class="builder-grid">
+          <!-- Grid will be generated here -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Cell Editor Modal -->
+  <div id="cellEditorModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="editorTitle">Edit Cell</h2>
+        <button class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="categoryEditor" style="display: none;">
+          <div class="form-group">
+            <label for="categoryName">Category Name:</label>
+            <input type="text" id="categoryName" class="text-input" placeholder="Enter category name...">
+          </div>
+        </div>
+
+        <div id="questionEditor" style="display: none;">
+          <div class="form-group">
+            <label for="questionSummary">Summary (for editing only):</label>
+            <input type="text" id="questionSummary" class="text-input" placeholder="e.g., 'Capital of France'">
+          </div>
+
+          <div class="form-group">
+            <label for="pointValue">Point Value:</label>
+            <input type="number" id="pointValue" class="text-input" min="0" step="100" value="200">
+          </div>
+
+          <div class="form-group">
+            <label for="questionText">Question:</label>
+            <textarea id="questionText" class="text-input" rows="3" placeholder="Enter the question..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="answerText">Answer:</label>
+            <textarea id="answerText" class="text-input" rows="2" placeholder="Enter the answer..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="dailyDoubleCheck">
+              <span>Mark as Daily Double</span>
+            </label>
+            <p class="form-hint">Only one Daily Double is allowed per game.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelEditBtn" class="btn btn-secondary">Cancel</button>
+        <button id="saveEditBtn" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="lib/js-yaml.min.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/gameState.js"></script>
+  <script src="js/parser.js"></script>
+  <script src="js/builder.js"></script>
+</body>
+</html>
