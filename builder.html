@@ -46,6 +46,30 @@
         <div id="builderGrid" class="builder-grid">
           <!-- Grid will be generated here -->
         </div>
+
+        <div class="final-jeopardy-section">
+          <h3>Final Jeopardy (Optional)</h3>
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="enableFinalJeopardy">
+              <span>Enable Final Jeopardy</span>
+            </label>
+          </div>
+          <div id="fjFields" style="display: none;">
+            <div class="form-group">
+              <label for="fjCategoryInput">Category:</label>
+              <input type="text" id="fjCategoryInput" class="text-input" placeholder="Enter Final Jeopardy category...">
+            </div>
+            <div class="form-group">
+              <label for="fjQuestionInput">Question:</label>
+              <textarea id="fjQuestionInput" class="text-input" rows="3" placeholder="Enter the Final Jeopardy question..."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="fjAnswerInput">Answer:</label>
+              <textarea id="fjAnswerInput" class="text-input" rows="2" placeholder="Enter the Final Jeopardy answer..."></textarea>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   </div>

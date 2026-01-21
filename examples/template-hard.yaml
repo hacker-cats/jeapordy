@@ -30,7 +30,6 @@ categories:
       - value: 600
         question: "This opera by Mozart features the Queen of the Night aria"
         answer: "What is 'The Magic Flute'?"
-        dailyDouble: true
       - value: 800
         question: "This Russian composer wrote 'The Firebird'"
         answer: "Who is Igor Stravinsky?"
@@ -92,6 +91,11 @@ categories:
       - value: 1000
         question: "This unsolved problem involves the distribution of prime numbers"
         answer: "What is the Riemann Hypothesis?"
+
+finalJeopardy:
+  category: "Nobel Prize Winners"
+  question: "This physicist developed the theory of general relativity and won the 1921 Nobel Prize in Physics for his explanation of the photoelectric effect"
+  answer: "Who is Albert Einstein?"
 
 settings:
   pointValues: [200, 400, 600, 800, 1000]

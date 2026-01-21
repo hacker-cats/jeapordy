@@ -53,6 +53,7 @@ function renderGame() {
   renderTeams();
   renderBoard();
   updateUndoRedoButtons();
+  checkFinalJeopardyAvailability();
 }
 
 // Render teams
@@ -522,6 +523,267 @@ function setupEventListeners() {
       closeModal(questionModal);
       closeModal(menuModal);
       closeModal(editTeamModal);
+      closeModal(finalJeopardyModal);
     });
   });
+
+  // Final Jeopardy button
+  const finalJeopardyBtn = document.getElementById('finalJeopardyBtn');
+  if (finalJeopardyBtn) {
+    finalJeopardyBtn.addEventListener('click', openFinalJeopardy);
+  }
+}
+
+// Final Jeopardy Implementation
+const finalJeopardyModal = document.getElementById('finalJeopardyModal');
+
+function checkFinalJeopardyAvailability() {
+  const fjBtn = document.getElementById('finalJeopardyBtn');
+  if (!fjBtn) return;
+
+  // Show button if Final Jeopardy exists and not completed
+  if (GameState.hasFinalJeopardy(currentGame) &&
+      !currentGame.state.finalJeopardy?.completed) {
+    fjBtn.style.display = 'inline-block';
+  } else {
+    fjBtn.style.display = 'none';
+  }
+}
+
+function openFinalJeopardy() {
+  if (!GameState.hasFinalJeopardy(currentGame)) return;
+
+  // Check if board is complete
+  const progress = GameState.getProgress(currentGame);
+  if (progress.answered < progress.total) {
+    const remaining = progress.total - progress.answered;
+    const message = `There are ${remaining} question${remaining !== 1 ? 's' : ''} remaining on the board. Are you sure you want to go to Final Jeopardy now?`;
+    if (!confirm(message)) {
+      return;
+    }
+  }
+
+  const fj = currentGame.config.finalJeopardy;
+  const fjState = currentGame.state.finalJeopardy || { wagers: {}, answers: {}, completed: false };
+
+  // Set category in all places
+  document.querySelectorAll('.fj-category-name').forEach(el => {
+    el.textContent = fj.category;
+  });
+
+  // Determine which phase to show
+  const allWagersSet = currentGame.state.teams.every(team =>
+    fjState.wagers.hasOwnProperty(team.id)
+  );
+
+  const allAnswersJudged = currentGame.state.teams.every(team =>
+    fjState.answers.hasOwnProperty(team.id)
+  );
+
+  if (allAnswersJudged) {
+    // Skip to complete
+    completeFinalJeopardy();
+    return;
+  } else if (allWagersSet) {
+    // Show answer phase
+    showFJAnswerPhase();
+  } else {
+    // Show wager phase
+    showFJWagerPhase();
+  }
+
+  openModal(finalJeopardyModal);
+}
+
+function showFJWagerPhase() {
+  document.getElementById('fjWagerPhase').style.display = 'block';
+  document.getElementById('fjQuestionPhase').style.display = 'none';
+  document.getElementById('fjAnswerPhase').style.display = 'none';
+
+  const wagerList = document.getElementById('fjWagerList');
+  const fjState = currentGame.state.finalJeopardy || { wagers: {}, answers: {}, completed: false };
+
+  wagerList.innerHTML = '';
+
+  currentGame.state.teams.forEach(team => {
+    const maxWager = GameState.getFinalJeopardyMaxWager(currentGame, team.id);
+    const hasWager = fjState.wagers.hasOwnProperty(team.id);
+    const wagerValue = fjState.wagers[team.id] || 0;
+
+    const item = document.createElement('div');
+    item.className = 'fj-wager-item' + (hasWager ? ' complete' : '');
+    item.innerHTML = `
+      <div class="fj-wager-team">
+        <div class="fj-team-color" style="background-color: ${team.color}"></div>
+        <div class="fj-team-info">
+          <h4>${team.name}</h4>
+          <div class="fj-team-score">Current Score: $${team.score}</div>
+        </div>
+      </div>
+      <div class="fj-wager-input-group">
+        <input type="number" class="fj-wager-input"
+               data-team-id="${team.id}"
+               min="0" max="${maxWager}"
+               value="${wagerValue}"
+               placeholder="$0 - $${maxWager}">
+      </div>
+    `;
+    wagerList.appendChild(item);
+  });
+
+  // Check if all wagers are set
+  updateFJRevealButton();
+
+  // Add input listeners
+  wagerList.querySelectorAll('.fj-wager-input').forEach(input => {
+    input.addEventListener('input', updateFJRevealButton);
+  });
+
+  // Reveal question button
+  const revealBtn = document.getElementById('fjRevealQuestionBtn');
+  revealBtn.onclick = () => {
+    // Validate and save all wagers
+    let valid = true;
+    wagerList.querySelectorAll('.fj-wager-input').forEach(input => {
+      const teamId = input.dataset.teamId;
+      const wager = parseInt(input.value) || 0;
+      const maxWager = GameState.getFinalJeopardyMaxWager(currentGame, teamId);
+
+      if (wager < 0) {
+        alert('Wagers cannot be negative.');
+        valid = false;
+        return;
+      }
+
+      if (wager > maxWager) {
+        const team = GameState.getTeam(currentGame, teamId);
+        alert(`${team.name}'s wager ($${wager}) exceeds their maximum allowed wager of $${maxWager}.`);
+        valid = false;
+        return;
+      }
+
+      GameState.setFinalJeopardyWager(currentGame, teamId, wager);
+    });
+
+    if (!valid) return;
+
+    Storage.updateGame(currentGame.id, currentGame);
+    showFJQuestionPhase();
+  };
+}
+
+function updateFJRevealButton() {
+  const inputs = document.querySelectorAll('.fj-wager-input');
+  const allFilled = Array.from(inputs).every(input => {
+    const value = parseInt(input.value);
+    return !isNaN(value) && value >= 0;
+  });
+
+  document.getElementById('fjRevealQuestionBtn').disabled = !allFilled;
+}
+
+function showFJQuestionPhase() {
+  document.getElementById('fjWagerPhase').style.display = 'none';
+  document.getElementById('fjQuestionPhase').style.display = 'block';
+  document.getElementById('fjAnswerPhase').style.display = 'none';
+
+  const fj = currentGame.config.finalJeopardy;
+  const fjState = currentGame.state.finalJeopardy;
+
+  document.getElementById('fjQuestionText').textContent = fj.question;
+
+  // Show wagers summary
+  const summary = document.getElementById('fjWagersSummary');
+  summary.innerHTML = currentGame.state.teams.map(team => `
+    <div class="fj-wager-summary-item">
+      <span><strong>${team.name}</strong></span>
+      <span>$${fjState.wagers[team.id] || 0}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('fjRevealAnswerBtn').onclick = () => {
+    showFJAnswerPhase();
+  };
+}
+
+function showFJAnswerPhase() {
+  document.getElementById('fjWagerPhase').style.display = 'none';
+  document.getElementById('fjQuestionPhase').style.display = 'none';
+  document.getElementById('fjAnswerPhase').style.display = 'block';
+
+  const fj = currentGame.config.finalJeopardy;
+  const fjState = currentGame.state.finalJeopardy;
+
+  document.getElementById('fjQuestionText2').textContent = fj.question;
+  document.getElementById('fjAnswerText').textContent = fj.answer;
+
+  // Show scoring
+  const scoringList = document.getElementById('fjScoringList');
+  scoringList.innerHTML = '';
+
+  currentGame.state.teams.forEach(team => {
+    const hasAnswer = fjState.answers.hasOwnProperty(team.id);
+    const wager = fjState.wagers[team.id] || 0;
+
+    const item = document.createElement('div');
+    item.className = 'fj-scoring-item' + (hasAnswer ? ' answered' : '');
+    item.innerHTML = `
+      <div class="fj-scoring-team">
+        <div class="fj-team-color" style="background-color: ${team.color}"></div>
+        <div class="fj-team-info">
+          <h4>${team.name}</h4>
+          <div class="fj-team-score">Wager: $${wager}</div>
+        </div>
+      </div>
+      <div class="fj-scoring-buttons">
+        <button class="btn btn-success btn-small" data-team-id="${team.id}" data-correct="true" ${hasAnswer ? 'disabled' : ''}>
+          Correct
+        </button>
+        <button class="btn btn-danger btn-small" data-team-id="${team.id}" data-correct="false" ${hasAnswer ? 'disabled' : ''}>
+          Incorrect
+        </button>
+      </div>
+    `;
+    scoringList.appendChild(item);
+  });
+
+  // Add button listeners
+  scoringList.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const teamId = btn.dataset.teamId;
+      const isCorrect = btn.dataset.correct === 'true';
+
+      GameState.setFinalJeopardyAnswer(currentGame, teamId, isCorrect);
+      Storage.updateGame(currentGame.id, currentGame);
+
+      // Refresh display
+      showFJAnswerPhase();
+      checkCompleteButton();
+    });
+  });
+
+  checkCompleteButton();
+
+  document.getElementById('fjCompleteBtn').onclick = () => {
+    completeFinalJeopardy();
+  };
+}
+
+function checkCompleteButton() {
+  const fjState = currentGame.state.finalJeopardy;
+  const allAnswered = currentGame.state.teams.every(team =>
+    fjState.answers.hasOwnProperty(team.id)
+  );
+
+  document.getElementById('fjCompleteBtn').disabled = !allAnswered;
+}
+
+function completeFinalJeopardy() {
+  GameState.completeFinalJeopardy(currentGame);
+  Storage.updateGame(currentGame.id, currentGame);
+
+  closeModal(finalJeopardyModal);
+  renderGame();
+
+  alert('Final Jeopardy Complete! Game Over!');
 }

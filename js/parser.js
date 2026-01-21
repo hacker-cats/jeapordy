@@ -127,6 +127,30 @@ const Parser = {
       }
     }
 
+    // Validate Final Jeopardy if present (optional, backwards compatible)
+    if (config.finalJeopardy) {
+      // Ensure category exists
+      if (!config.finalJeopardy.category || typeof config.finalJeopardy.category !== 'string') {
+        config.finalJeopardy.category = 'Final Jeopardy';
+        warnings.push('Final Jeopardy: No category provided, using default');
+      }
+
+      // Allow empty question and answer (can fill in later)
+      if (config.finalJeopardy.question === undefined || config.finalJeopardy.question === null) {
+        config.finalJeopardy.question = '';
+      }
+      if (typeof config.finalJeopardy.question !== 'string') {
+        config.finalJeopardy.question = String(config.finalJeopardy.question);
+      }
+
+      if (config.finalJeopardy.answer === undefined || config.finalJeopardy.answer === null) {
+        config.finalJeopardy.answer = '';
+      }
+      if (typeof config.finalJeopardy.answer !== 'string') {
+        config.finalJeopardy.answer = String(config.finalJeopardy.answer);
+      }
+    }
+
     // Only throw errors for critical issues
     if (errors.length > 0) {
       throw new Error('Validation errors:\n' + errors.join('\n'));

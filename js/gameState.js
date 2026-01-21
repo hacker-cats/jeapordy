@@ -43,7 +43,12 @@ const GameState = {
         currentQuestion: null,
         answeredQuestions: [],
         teams: defaultTeams,
-        settings: settings
+        settings: settings,
+        finalJeopardy: {
+          wagers: {},  // teamId: wagerAmount
+          answers: {}, // teamId: correct/incorrect
+          completed: false
+        }
       },
       history: [],
       historyIndex: -1
@@ -188,6 +193,55 @@ const GameState = {
 
   getMinWager() {
     return 5;
+  },
+
+  // Final Jeopardy functions
+  hasFinalJeopardy(game) {
+    return game.config.finalJeopardy &&
+           game.config.finalJeopardy.question &&
+           game.config.finalJeopardy.answer;
+  },
+
+  isFinalJeopardyReady(game) {
+    // Check if all main board questions are answered
+    const progress = this.getProgress(game);
+    return progress.answered >= progress.total && this.hasFinalJeopardy(game);
+  },
+
+  setFinalJeopardyWager(game, teamId, wager) {
+    if (!game.state.finalJeopardy) {
+      game.state.finalJeopardy = { wagers: {}, answers: {}, completed: false };
+    }
+    game.state.finalJeopardy.wagers[teamId] = wager;
+    return game;
+  },
+
+  setFinalJeopardyAnswer(game, teamId, isCorrect) {
+    if (!game.state.finalJeopardy) {
+      game.state.finalJeopardy = { wagers: {}, answers: {}, completed: false };
+    }
+    game.state.finalJeopardy.answers[teamId] = isCorrect;
+
+    // Update score
+    const wager = game.state.finalJeopardy.wagers[teamId] || 0;
+    const pointChange = isCorrect ? wager : -wager;
+    this.updateScore(game, teamId, pointChange);
+
+    return game;
+  },
+
+  completeFinalJeopardy(game) {
+    if (!game.state.finalJeopardy) {
+      game.state.finalJeopardy = { wagers: {}, answers: {}, completed: false };
+    }
+    game.state.finalJeopardy.completed = true;
+    game.status = 'completed';
+    return game;
+  },
+
+  getFinalJeopardyMaxWager(game, teamId) {
+    const team = this.getTeam(game, teamId);
+    return team ? Math.max(0, team.score) : 0;
   },
 
   // Deep clone for history

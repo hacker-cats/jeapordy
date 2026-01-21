@@ -15,6 +15,7 @@
         <h1 id="gameTitle">Game Title</h1>
       </div>
       <div class="header-right">
+        <button id="finalJeopardyBtn" class="btn btn-primary" style="display: none;">Final Jeopardy</button>
         <button id="undoBtn" class="btn btn-icon" title="Undo" disabled>↶</button>
         <button id="redoBtn" class="btn btn-icon" title="Redo" disabled>↷</button>
         <button id="menuBtn" class="btn btn-secondary">Menu</button>
@@ -144,6 +145,71 @@
       <div class="modal-footer">
         <button id="cancelEditTeamBtn" class="btn btn-secondary">Cancel</button>
         <button id="saveTeamBtn" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final Jeopardy Modal -->
+  <div id="finalJeopardyModal" class="modal">
+    <div class="modal-content modal-large">
+      <div class="modal-header">
+        <h2>Final Jeopardy</h2>
+        <button class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- Wager Phase -->
+        <div id="fjWagerPhase" style="display: none;">
+          <div class="fj-category">
+            <h3>Category:</h3>
+            <div id="fjCategory" class="fj-category-name"></div>
+          </div>
+          <div class="fj-instructions">
+            <p>All teams must make their wagers before the question is revealed.</p>
+            <p>Wager any amount from $0 up to your current score.</p>
+          </div>
+          <div id="fjWagerList" class="fj-wager-list">
+            <!-- Team wager inputs will be inserted here -->
+          </div>
+          <button id="fjRevealQuestionBtn" class="btn btn-primary" disabled>Reveal Question</button>
+        </div>
+
+        <!-- Question Phase -->
+        <div id="fjQuestionPhase" style="display: none;">
+          <div class="fj-category">
+            <h3>Category:</h3>
+            <div class="fj-category-name"></div>
+          </div>
+          <div class="fj-question">
+            <div id="fjQuestionText"></div>
+          </div>
+          <div class="fj-wagers-summary">
+            <h4>Wagers:</h4>
+            <div id="fjWagersSummary"></div>
+          </div>
+          <button id="fjRevealAnswerBtn" class="btn btn-secondary">Reveal Answer</button>
+        </div>
+
+        <!-- Answer Phase -->
+        <div id="fjAnswerPhase" style="display: none;">
+          <div class="fj-category">
+            <h3>Category:</h3>
+            <div class="fj-category-name"></div>
+          </div>
+          <div class="fj-question">
+            <div id="fjQuestionText2"></div>
+          </div>
+          <div class="fj-answer">
+            <h4>Answer:</h4>
+            <div id="fjAnswerText"></div>
+          </div>
+          <div class="fj-scoring">
+            <h4>Judge Answers:</h4>
+            <div id="fjScoringList">
+              <!-- Team scoring buttons will be inserted here -->
+            </div>
+          </div>
+          <button id="fjCompleteBtn" class="btn btn-success" disabled>Complete Game</button>
+        </div>
       </div>
     </div>
   </div>

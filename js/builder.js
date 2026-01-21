@@ -3,7 +3,8 @@
 let gameData = {
   title: 'My Jeopardy Game',
   categories: [],
-  dailyDouble: null // {col, row}
+  dailyDouble: null, // {col, row}
+  finalJeopardy: null // {category, question, answer}
 };
 
 let currentEditCell = null;
@@ -41,6 +42,11 @@ function setupEventListeners() {
   document.getElementById('saveEditBtn').addEventListener('click', saveCellEdit);
 
   document.getElementById('dailyDoubleCheck').addEventListener('change', handleDailyDoubleChange);
+
+  // Final Jeopardy toggle
+  document.getElementById('enableFinalJeopardy').addEventListener('change', (e) => {
+    document.getElementById('fjFields').style.display = e.target.checked ? 'block' : 'none';
+  });
 
   // Close modal on backdrop click
   const modal = document.getElementById('cellEditorModal');
@@ -359,6 +365,20 @@ function exportGame(format) {
     }
   };
 
+  // Add Final Jeopardy if enabled
+  const fjEnabled = document.getElementById('enableFinalJeopardy').checked;
+  if (fjEnabled) {
+    const category = document.getElementById('fjCategoryInput').value.trim();
+    const question = document.getElementById('fjQuestionInput').value.trim();
+    const answer = document.getElementById('fjAnswerInput').value.trim();
+
+    config.finalJeopardy = {
+      category: category || 'Final Jeopardy',
+      question: question || '',
+      answer: answer || ''
+    };
+  }
+
   // Export
   if (format === 'yaml') {
     const yaml = jsyaml.dump(config);
@@ -403,6 +423,20 @@ function saveGame() {
       allowNegativeScores: true
     }
   };
+
+  // Add Final Jeopardy if enabled
+  const fjEnabled = document.getElementById('enableFinalJeopardy').checked;
+  if (fjEnabled) {
+    const category = document.getElementById('fjCategoryInput').value.trim();
+    const question = document.getElementById('fjQuestionInput').value.trim();
+    const answer = document.getElementById('fjAnswerInput').value.trim();
+
+    config.finalJeopardy = {
+      category: category || 'Final Jeopardy',
+      question: question || '',
+      answer: answer || ''
+    };
+  }
 
   // Create and save game
   const game = GameState.createGame(config);
