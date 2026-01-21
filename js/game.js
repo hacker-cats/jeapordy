@@ -4,6 +4,7 @@ let currentGame = null;
 let currentQuestion = null;
 let selectedTeam = null;
 let currentWager = 0;
+let attemptedTeams = []; // Track teams that have already attempted this question
 
 // DOM elements
 const gameTitle = document.getElementById('gameTitle');
@@ -42,6 +43,11 @@ function loadGame(gameId) {
     alert('Game not found');
     window.location.href = 'index.html';
     return;
+  }
+
+  // Apply theme if configured
+  if (currentGame.config.theme) {
+    ThemeManager.applyTheme(currentGame.config.theme);
   }
 
   renderGame();
@@ -126,6 +132,10 @@ function renderBoard() {
 function openQuestion(categoryIndex, questionIndex, isAnswered = false) {
   currentQuestion = GameState.getQuestion(currentGame, categoryIndex, questionIndex);
   if (!currentQuestion) return;
+
+  // Reset attempted teams list for new question
+  attemptedTeams = [];
+  selectedTeam = null;
 
   // If question is already answered, show reset option
   if (isAnswered) {
@@ -213,6 +223,16 @@ function showDailyDouble() {
 function showQuestion(isDailyDouble = false) {
   document.getElementById('questionScreen').style.display = 'block';
 
+  // Display image if present
+  const questionImageContainer = document.getElementById('questionImage');
+  const questionImageElement = document.getElementById('questionImageElement');
+  if (currentQuestion.image) {
+    questionImageElement.src = currentQuestion.image;
+    questionImageContainer.style.display = 'block';
+  } else {
+    questionImageContainer.style.display = 'none';
+  }
+
   if (isDailyDouble) {
     document.getElementById('questionValue').textContent = `Daily Double - Wager: $${currentWager}`;
     document.getElementById('answerSection').style.display = 'block';
@@ -229,7 +249,17 @@ function renderBuzzerButtons() {
   const container = document.getElementById('buzzerButtons');
   container.innerHTML = '';
 
-  currentGame.state.teams.forEach(team => {
+  // Filter out teams that have already attempted
+  const availableTeams = currentGame.state.teams.filter(team =>
+    !attemptedTeams.includes(team.id)
+  );
+
+  if (availableTeams.length === 0) {
+    container.innerHTML = '<p style="color: var(--text-secondary);">All teams have attempted this question.</p>';
+    return;
+  }
+
+  availableTeams.forEach(team => {
     const btn = document.createElement('button');
     btn.className = 'buzzer-btn';
     btn.textContent = team.name;
@@ -255,19 +285,21 @@ function setupAnswerSection() {
 
   const showAnswers = currentGame.state.settings.showAnswers;
 
+  // Always show judgment buttons
+  judgmentButtons.style.display = 'flex';
+
   if (showAnswers) {
+    // Auto-show answer
     answerText.style.display = 'block';
     revealBtn.style.display = 'none';
-    judgmentButtons.style.display = 'flex';
   } else {
+    // Hide answer until revealed
     answerText.style.display = 'none';
     revealBtn.style.display = 'inline-block';
-    judgmentButtons.style.display = 'none';
 
     revealBtn.onclick = () => {
       answerText.style.display = 'block';
       revealBtn.style.display = 'none';
-      judgmentButtons.style.display = 'flex';
     };
   }
 
@@ -302,9 +334,34 @@ function handleAnswer(isCorrect) {
     History.addAction(currentGame, isCorrect ? 'answer-correct' : 'answer-incorrect', historyData);
   }
 
-  // Update game state
-  GameState.markQuestionAnswered(currentGame, currentQuestion.categoryIndex, currentQuestion.questionIndex);
+  // Update score
   GameState.updateScore(currentGame, selectedTeam.id, pointChange);
+
+  // If incorrect and not a daily double, allow another team to try
+  if (!isCorrect && !isDailyDouble) {
+    // Add this team to attempted list
+    attemptedTeams.push(selectedTeam.id);
+    selectedTeam = null;
+
+    // Check if there are more teams available
+    const availableTeams = currentGame.state.teams.filter(team =>
+      !attemptedTeams.includes(team.id)
+    );
+
+    if (availableTeams.length > 0) {
+      // Hide answer section, show buzzer section again
+      document.getElementById('answerSection').style.display = 'none';
+      document.getElementById('buzzerSection').style.display = 'block';
+      renderBuzzerButtons();
+
+      // Save state but don't mark as answered yet
+      Storage.updateGame(currentGame.id, currentGame);
+      return; // Don't close modal
+    }
+  }
+
+  // Mark question as answered (correct answer or all teams attempted or daily double)
+  GameState.markQuestionAnswered(currentGame, currentQuestion.categoryIndex, currentQuestion.questionIndex);
 
   // Save to storage
   Storage.updateGame(currentGame.id, currentGame);
@@ -451,6 +508,7 @@ window.editTeam = function(teamId) {
 
   document.getElementById('teamNameInput').value = team.name;
   document.getElementById('teamColorInput').value = team.color;
+  document.getElementById('teamScoreInput').value = team.score;
 
   openModal(editTeamModal);
 };
@@ -460,19 +518,22 @@ function saveTeamEdit() {
 
   const team = GameState.getTeam(currentGame, editingTeamId);
   const oldName = team.name;
+  const oldScore = team.score;
 
   const newName = document.getElementById('teamNameInput').value;
   const newColor = document.getElementById('teamColorInput').value;
+  const newScore = parseInt(document.getElementById('teamScoreInput').value) || 0;
 
   History.addAction(currentGame, 'team-update', {
     teamId: editingTeamId,
     teamName: oldName,
-    updates: { name: newName, color: newColor }
+    updates: { name: newName, color: newColor, score: newScore }
   });
 
   GameState.updateTeam(currentGame, editingTeamId, {
     name: newName,
-    color: newColor
+    color: newColor,
+    score: newScore
   });
 
   Storage.updateGame(currentGame.id, currentGame);

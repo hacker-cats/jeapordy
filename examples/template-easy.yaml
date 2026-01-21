@@ -50,6 +50,9 @@ categories:
         question: "This is the number of months in a year"
         answer: "What is twelve (12)?"
 
+theme:
+  preset: "forest"
+
 settings:
   pointValues: [100, 200, 300]
   allowNegativeScores: false

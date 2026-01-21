@@ -28,6 +28,13 @@
           <input type="text" id="gameTitle" class="text-input" placeholder="Enter game title..." value="My Jeopardy Game">
         </div>
 
+        <div class="form-group">
+          <label for="themeSelect">Theme:</label>
+          <select id="themeSelect" class="text-input">
+            <option value="">Classic Jeopardy (Default)</option>
+          </select>
+        </div>
+
         <div class="grid-controls">
           <div>
             <button id="addColumnBtn" class="btn btn-secondary btn-small">+ Add Column</button>
@@ -111,6 +118,12 @@
           </div>
 
           <div class="form-group">
+            <label for="imageUrl">Image URL (optional):</label>
+            <input type="text" id="imageUrl" class="text-input" placeholder="https://example.com/image.jpg">
+            <p class="form-hint">Enter a URL to an image (http://, https://, or data:image/)</p>
+          </div>
+
+          <div class="form-group">
             <label class="checkbox-label">
               <input type="checkbox" id="dailyDoubleCheck">
               <span>Mark as Daily Double</span>
@@ -130,6 +143,7 @@
   <script src="js/storage.js"></script>
   <script src="js/gameState.js"></script>
   <script src="js/parser.js"></script>
+  <script src="js/themes.js"></script>
   <script src="js/builder.js"></script>
 </body>
 </html>

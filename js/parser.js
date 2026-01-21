@@ -111,6 +111,18 @@ const Parser = {
           if (question.dailyDouble !== undefined && typeof question.dailyDouble !== 'boolean') {
             question.dailyDouble = Boolean(question.dailyDouble);
           }
+
+          // Validate image URL if present (optional)
+          if (question.image !== undefined && question.image !== null) {
+            if (typeof question.image !== 'string') {
+              question.image = String(question.image);
+            }
+            // Basic URL validation
+            const urlPattern = /^(https?:\/\/|data:image\/)/i;
+            if (!urlPattern.test(question.image)) {
+              warnings.push(`Category ${catIndex + 1}, Question ${qIndex + 1}: Image URL should start with http://, https://, or data:image/`);
+            }
+          }
         });
       });
     }
@@ -148,6 +160,30 @@ const Parser = {
       }
       if (typeof config.finalJeopardy.answer !== 'string') {
         config.finalJeopardy.answer = String(config.finalJeopardy.answer);
+      }
+    }
+
+    // Validate theme if present (optional, backwards compatible)
+    if (config.theme) {
+      // Can be a preset name (string) or custom colors (object)
+      if (typeof config.theme === 'string') {
+        // Preset theme name - will be validated when applied
+        config.theme = { preset: config.theme };
+      } else if (typeof config.theme === 'object') {
+        // Custom theme colors - validate hex color format
+        const colorFields = ['boardColor', 'questionColor', 'textColor', 'accentColor', 'backgroundColor'];
+        colorFields.forEach(field => {
+          if (config.theme[field] && typeof config.theme[field] === 'string') {
+            // Basic hex color validation
+            if (!/^#[0-9A-Fa-f]{6}$/.test(config.theme[field])) {
+              warnings.push(`Theme: "${field}" has invalid hex color format, ignoring`);
+              delete config.theme[field];
+            }
+          }
+        });
+      } else {
+        warnings.push('Theme: Invalid format, ignoring');
+        delete config.theme;
       }
     }
 

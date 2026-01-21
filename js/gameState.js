@@ -18,6 +18,12 @@ const GameState = {
         name: 'Team 1',
         color: '#3b82f6',
         score: 0
+      },
+      {
+        id: 'team-2',
+        name: 'Team 2',
+        color: '#ef4444',
+        score: 0
       }
     ];
 

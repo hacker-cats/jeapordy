@@ -97,6 +97,9 @@ finalJeopardy:
   question: "This physicist developed the theory of general relativity and won the 1921 Nobel Prize in Physics for his explanation of the photoelectric effect"
   answer: "Who is Albert Einstein?"
 
+theme:
+  preset: "royal"
+
 settings:
   pointValues: [200, 400, 600, 800, 1000]
   doubleJeopardy: false

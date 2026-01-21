@@ -4,7 +4,8 @@ let gameData = {
   title: 'My Jeopardy Game',
   categories: [],
   dailyDouble: null, // {col, row}
-  finalJeopardy: null // {category, question, answer}
+  finalJeopardy: null, // {category, question, answer}
+  theme: null // theme config
 };
 
 let currentEditCell = null;
@@ -14,6 +15,7 @@ let numRows = 5;
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
   initializeGrid();
+  populateThemeDropdown();
   setupEventListeners();
 });
 
@@ -48,6 +50,17 @@ function setupEventListeners() {
     document.getElementById('fjFields').style.display = e.target.checked ? 'block' : 'none';
   });
 
+  // Theme preview
+  document.getElementById('themeSelect').addEventListener('change', (e) => {
+    const themeValue = e.target.value;
+    if (themeValue) {
+      ThemeManager.applyTheme({ preset: themeValue });
+    } else {
+      // Reset to default
+      window.location.reload();
+    }
+  });
+
   // Close modal on backdrop click
   const modal = document.getElementById('cellEditorModal');
   modal.addEventListener('click', (e) => {
@@ -80,6 +93,19 @@ function initializeGrid() {
   }
 
   renderGrid();
+}
+
+// Populate theme dropdown
+function populateThemeDropdown() {
+  const select = document.getElementById('themeSelect');
+  const presets = ThemeManager.getPresets();
+
+  presets.forEach(preset => {
+    const option = document.createElement('option');
+    option.value = preset.id;
+    option.textContent = preset.name;
+    select.appendChild(option);
+  });
 }
 
 // Grid manipulation
@@ -259,6 +285,7 @@ function editQuestion(col, row) {
   document.getElementById('pointValue').value = question.value;
   document.getElementById('questionText').value = question.question;
   document.getElementById('answerText').value = question.answer;
+  document.getElementById('imageUrl').value = question.image || '';
   document.getElementById('dailyDoubleCheck').checked = isDailyDouble;
 
   openModal();
@@ -299,6 +326,8 @@ function saveCellEdit() {
     question.value = parseInt(document.getElementById('pointValue').value) || 200;
     question.question = document.getElementById('questionText').value.trim();
     question.answer = document.getElementById('answerText').value.trim();
+    const imageUrl = document.getElementById('imageUrl').value.trim();
+    question.image = imageUrl || undefined;
 
     const isDailyDouble = document.getElementById('dailyDoubleCheck').checked;
 
@@ -349,6 +378,11 @@ function exportGame(format) {
           answer: q.answer || ''
         };
 
+        // Add image if present
+        if (q.image) {
+          questionObj.image = q.image;
+        }
+
         // Add daily double if this is it
         if (gameData.dailyDouble) {
           const catIndex = gameData.categories.indexOf(cat);
@@ -377,6 +411,12 @@ function exportGame(format) {
       question: question || '',
       answer: answer || ''
     };
+  }
+
+  // Add theme if selected
+  const themeSelect = document.getElementById('themeSelect').value;
+  if (themeSelect) {
+    config.theme = { preset: themeSelect };
   }
 
   // Export
@@ -409,6 +449,11 @@ function saveGame() {
           answer: q.answer || ''
         };
 
+        // Add image if present
+        if (q.image) {
+          questionObj.image = q.image;
+        }
+
         // Add daily double if this is it
         if (gameData.dailyDouble &&
             gameData.dailyDouble.col === catIndex &&
@@ -436,6 +481,12 @@ function saveGame() {
       question: question || '',
       answer: answer || ''
     };
+  }
+
+  // Add theme if selected
+  const themeSelect = document.getElementById('themeSelect').value;
+  if (themeSelect) {
+    config.theme = { preset: themeSelect };
   }
 
   // Create and save game

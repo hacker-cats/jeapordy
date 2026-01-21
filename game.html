@@ -52,6 +52,9 @@
 
         <div id="questionScreen" style="display: none;">
           <div class="question-value" id="questionValue">$200</div>
+          <div id="questionImage" class="question-image" style="display: none;">
+            <img id="questionImageElement" src="" alt="Question image">
+          </div>
           <div class="question-text" id="questionText">Question text goes here</div>
 
           <div id="buzzerSection" class="buzzer-section">
@@ -141,6 +144,10 @@
           <label for="teamColorInput">Team Color:</label>
           <input type="color" id="teamColorInput" class="color-input">
         </div>
+        <div class="form-group">
+          <label for="teamScoreInput">Score:</label>
+          <input type="number" id="teamScoreInput" class="text-input" step="1">
+        </div>
       </div>
       <div class="modal-footer">
         <button id="cancelEditTeamBtn" class="btn btn-secondary">Cancel</button>
@@ -217,6 +224,7 @@
   <script src="js/storage.js"></script>
   <script src="js/gameState.js"></script>
   <script src="js/history.js"></script>
+  <script src="js/themes.js"></script>
   <script src="js/game.js"></script>
 </body>
 </html>

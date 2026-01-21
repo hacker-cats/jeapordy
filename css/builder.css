@@ -149,7 +149,7 @@
 }
 
 .builder-cell.category:hover {
-  background-color: #0508c4;
+  opacity: 0.9;
 }
 
 .cell-content {

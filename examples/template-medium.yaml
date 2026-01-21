@@ -77,6 +77,9 @@ categories:
         question: "This NBA player has the most championship rings"
         answer: "Who is Bill Russell?"
 
+theme:
+  preset: "ocean"
+
 settings:
   pointValues: [200, 400, 600, 800]
   allowNegativeScores: true
